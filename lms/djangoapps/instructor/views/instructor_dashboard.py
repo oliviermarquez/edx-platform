@@ -285,7 +285,8 @@ def _section_e_commerce(course, access, paid_mode, coupons_enabled, reports_enab
         'coupons_enabled': coupons_enabled,
         'reports_enabled': reports_enabled,
         'course_price': course_price,
-        'total_amount': total_amount
+        'total_amount': total_amount,
+        'is_otto_course': len([mode.sku for mode in CourseMode.modes_for_course(course_key)]) > 0
     }
     return section_data
 
