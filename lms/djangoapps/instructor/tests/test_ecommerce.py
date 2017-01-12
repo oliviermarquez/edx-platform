@@ -354,3 +354,27 @@ class TestECommerceDashboardViews(SiteMixin, SharedModuleStoreTestCase):
         self.assertIn(self.e_commerce_link, response.content)
         # Coupons should show up for White Label sites with priced honor modes.
         self.assertNotIn('Coupons List', response.content)
+
+    def test_coupon_code_section_not_under_e_commerce_tab(self):
+        """
+        Test Coupon Creation UI, under E-commerce Tab, should not be available in the Instructor Dashboard with
+        e-commerce course
+        """
+        # Setup e-commerce course
+        CourseMode.objects.filter(course_id=self.course.id).update(sku='test_sku')
+
+        response = self.client.get(self.url)
+        self.assertIn(self.e_commerce_link, response.content)
+        self.assertNotIn('Coupon Code List', response.content)
+
+    def test_enrollment_codes_section_not_under_e_commerce_tab(self):
+        """
+        Test Enrollment Codes UI, under E-commerce Tab, should not be available in the Instructor Dashboard with
+        e-commerce course
+        """
+        # Setup e-commerce course
+        CourseMode.objects.filter(course_id=self.course.id).update(sku='test_sku')
+
+        response = self.client.get(self.url)
+        self.assertIn(self.e_commerce_link, response.content)
+        self.assertNotIn('<h3 class="hd hd-3">Enrollment Codes</h3>', response.content)

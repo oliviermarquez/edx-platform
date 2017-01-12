@@ -286,7 +286,7 @@ def _section_e_commerce(course, access, paid_mode, coupons_enabled, reports_enab
         'reports_enabled': reports_enabled,
         'course_price': course_price,
         'total_amount': total_amount,
-        'is_otto_course': len([mode.sku for mode in CourseMode.modes_for_course(course_key)]) > 0
+        'is_e_commerce_course': is_e_commerce_course(course_key)
     }
     return section_data
 
@@ -691,3 +691,7 @@ def _section_metrics(course, access):
         'post_metrics_data_csv_url': reverse('post_metrics_data_csv'),
     }
     return section_data
+
+
+def is_e_commerce_course(course_key):
+    return len([mode.sku for mode in CourseMode.modes_for_course(course_key) if mode.sku]) > 0
