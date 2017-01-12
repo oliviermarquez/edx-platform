@@ -694,4 +694,8 @@ def _section_metrics(course, access):
 
 
 def is_e_commerce_course(course_key):
+    """
+    Checks if the given course is an e-commerce course or not, by checking its SKU value from
+    CourseMode records for the course
+    """
     return len([mode.sku for mode in CourseMode.modes_for_course(course_key) if mode.sku]) > 0
