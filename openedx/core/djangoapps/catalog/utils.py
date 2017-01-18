@@ -77,7 +77,8 @@ def get_programs(user=None, uuid=None, type=None):  # pylint: disable=redefined-
 
 
 def get_program_types(user=None, program_type_name=None):  # pylint: disable=redefined-builtin
-    """Retrieve all program types from the catalog service.
+    """
+    Retrieve all program types from the catalog service.
 
     Returns:
         list of dict, representing program types.
@@ -98,10 +99,11 @@ def get_program_types(user=None, program_type_name=None):  # pylint: disable=red
             cache_key=cache_key if catalog_integration.is_cache_enabled else None,
             api=api
         )
+
         # Because program type name is not url friendly, we don't have a program_types endpoint
         # to retrieve a single program_type based on program_type_name.
         if program_type_name:
-            response = [program_type for program_type in response if program_type.name==program_type_name]
+            response = [program_type for program_type in response if program_type.name == program_type_name]
 
         return response
     else:
@@ -109,13 +111,15 @@ def get_program_types(user=None, program_type_name=None):  # pylint: disable=red
 
 
 def get_programs_data(user=None, program_id=None):
-    """Return the list of Programs after adding the ProgramType Logo Image
-       This is of programs is to be displayed on the courseware and home page
-       Filter out all programs with status not in the allowed_statuses list.
     """
+    Return the list of Programs after adding the ProgramType Logo Image
+    This is of programs is to be displayed on the courseware and home page
+    Filter out all programs with status not in the allowed_statuses list.
+    """
+    #TODO correct the description
 
-    allowed_statuses = ['active']
     filtered_programs_list = []
+    allowed_statuses = ['active']
 
     programs_list = get_programs(user, program_id)
 
@@ -126,7 +130,6 @@ def get_programs_data(user=None, program_id=None):
         # The get_programs returns a dict in case of a single program lookup.
         if isinstance(programs_list, dict):
             programs_list = [programs_list]
-
 
         for program in programs_list:
             if program["status"] in allowed_statuses:

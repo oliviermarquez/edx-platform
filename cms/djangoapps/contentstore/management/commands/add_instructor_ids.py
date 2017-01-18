@@ -11,8 +11,9 @@ from django.core.management.base import BaseCommand, CommandError
 
 from opaque_keys.edx.keys import CourseKey
 
-from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.models.course_details import CourseDetails
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+
 
 log = logging.getLogger(__name__)
 
@@ -20,31 +21,16 @@ log = logging.getLogger(__name__)
 class Command(BaseCommand):
     """
     Example usage:
-        ./manage.py cms add_instructor_ids --username <username> --orgs <org1> <org2>
+        ./manage.py cms add_instructor_ids --username <username> --orgs <org1> <org2> ...
         --course_keys <key1> <key2> ... --settings=devstack
     """
     help = './manage.py cms add_instructor_ids --username <username> --orgs <org1> <org2> ... '\
-           ' --course_keys <key1> <key2> ... --settings=devstack'
+           '--course_keys <key1> <key2> ... --settings=devstack'
 
     def add_arguments(self, parser):
         """
         Add arguments to the command parser.
         """
-        parser.add_argument(
-            '--course_keys',
-            nargs='+',
-            help='Enter one or more course keys',
-            required=False,
-            default=[]
-        )
-
-        parser.add_argument(
-            '--orgs',
-            nargs='+',
-            help='Enter one or more organizations',
-            required=False,
-            default=[]
-        )
 
         parser.add_argument(
             '--username',
@@ -52,8 +38,25 @@ class Command(BaseCommand):
             help='Enter an existing username',
         )
 
+        parser.add_argument(
+            '--orgs',
+            nargs='+',
+            help='Enter one or more organizations space separated',
+            required=False,
+            default=[]
+        )
+
+        parser.add_argument(
+            '--course_keys',
+            nargs='+',
+            help='Enter one or more course keys space separated',
+            required=False,
+            default=[]
+        )
+
+
     @staticmethod
-    def _populate_uuid(username, course_keys):
+    def _populate_instructor_uuid(course_keys, username):
         """
         Populate the uuid in each instructor.
         """
@@ -75,7 +78,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        username = options['username']
+        username = options.get('username')
         organizations = options.get('orgs', [])
         course_keys = options.get('course_keys', [])
 
@@ -95,6 +98,6 @@ class Command(BaseCommand):
 
             question = "This will populate instructor UUID in all these courses. Proceed? (y/n): "
             if str(raw_input(question)).lower().strip()[0] == 'y':
-                self._populate_uuid(username, course_keys)
+                self._populate_instructor_uuid(course_keys, username)
         else:
-            self._populate_uuid(username, course_keys)
+            self._populate_instructor_uuid(course_keys, username)

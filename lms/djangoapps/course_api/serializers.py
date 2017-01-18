@@ -7,10 +7,10 @@ import urllib
 from django.core.urlresolvers import reverse
 from rest_framework import serializers
 
-from course_modes.models import CourseMode
 from lms.djangoapps.commerce.api.v1.serializers import CourseModeSerializer
 from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.core.lib.api.fields import AbsoluteURLField
+from course_modes.models import CourseMode
 
 
 class _MediaSerializer(serializers.Serializer):  # pylint: disable=abstract-method
@@ -51,12 +51,6 @@ class _CourseApiMediaCollectionSerializer(serializers.Serializer):  # pylint: di
     course_video = _MediaSerializer(source='*', uri_attribute='course_video_url')
     image = ImageSerializer(source='image_urls')
 
-
-class _CourseModeSerializer(serializers.Serializer):
-    """ CourseMode serializer. """
-    name = serializers.CharField(source='mode_slug')
-    price = serializers.IntegerField(source='min_price')
-    currency = serializers.CharField()
 
 class CourseSerializer(serializers.Serializer):  # pylint: disable=abstract-method
     """

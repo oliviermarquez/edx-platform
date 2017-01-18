@@ -293,7 +293,7 @@ class CourseDetails(object):
     @staticmethod
     def _populate_instructor_uuid(instructor_info):
         """
-            Populate the UUIDs in each instructor if its not already exist.
+        Populate the UUIDs in each instructor if its not exist already.
         """
         for instructor in instructor_info.get("instructors", []):
             if "uuid" not in instructor:
