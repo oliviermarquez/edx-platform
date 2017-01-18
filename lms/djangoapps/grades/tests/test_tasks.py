@@ -121,8 +121,8 @@ class RecalculateSubsectionGradeTest(ModuleStoreTestCase):
         self.assertTrue(mock_subsection_signal.called)
 
     @ddt.data(
-        (ModuleStoreEnum.Type.mongo, 1, 23),
-        (ModuleStoreEnum.Type.split, 3, 22),
+        (ModuleStoreEnum.Type.mongo, 1, 24),
+        (ModuleStoreEnum.Type.split, 3, 23),
     )
     @ddt.unpack
     def test_subsection_grade_updated(self, default_store, num_mongo_calls, num_sql_calls):
@@ -170,8 +170,8 @@ class RecalculateSubsectionGradeTest(ModuleStoreTestCase):
     # TODO (TNL-6225) Fix the number of SQL queries so they
     # don't grow linearly with the number of sequentials.
     @ddt.data(
-        (ModuleStoreEnum.Type.mongo, 1, 46),
-        (ModuleStoreEnum.Type.split, 3, 45),
+        (ModuleStoreEnum.Type.mongo, 1, 47),
+        (ModuleStoreEnum.Type.split, 3, 46),
     )
     @ddt.unpack
     def test_query_count_does_not_change_with_more_content(self, default_store, num_mongo_calls, num_sql_calls):
@@ -197,7 +197,7 @@ class RecalculateSubsectionGradeTest(ModuleStoreTestCase):
             self.set_up_course(enable_subsection_grades=False)
             self.assertFalse(PersistentGradesEnabledFlag.feature_enabled(self.course.id))
             with check_mongo_calls(0):
-                with self.assertNumQueries(0):
+                with self.assertNumQueries(1):
                     self._apply_recalculate_subsection_grade()
 
     @skip("Pending completion of TNL-5089")
