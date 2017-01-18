@@ -133,7 +133,7 @@ def get_programs_data(user=None, program_id=None):
 
         for program in programs_list:
             if program["status"] in allowed_statuses:
-                program["logo_image"] = program_types_lookup_dict[program["type"]]["logo_image"]
+                program["type"] = program_types_lookup_dict[program["type"]]
                 filtered_programs_list.append(program)
 
     return filtered_programs_list
