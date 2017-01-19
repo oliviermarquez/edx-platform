@@ -14,7 +14,8 @@ class ModeCreationPage(PageObject):
     created for an existing course.
     """
 
-    def __init__(self, browser, course_id, mode_slug=None, mode_display_name=None, min_price=None, suggested_prices=None, currency=None):
+    def __init__(self, browser, course_id, mode_slug=None, mode_display_name=None, min_price=None,
+                 suggested_prices=None, currency=None, sku=None):
         """The mode creation page is an endpoint for HTTP GET requests.
 
         By default, it will create an 'honor' mode for the given course with display name
@@ -50,6 +51,9 @@ class ModeCreationPage(PageObject):
 
         if currency is not None:
             self._parameters['currency'] = currency
+
+        if sku is not None:
+            self._parameters['sku'] = sku
 
     @property
     def url(self):
