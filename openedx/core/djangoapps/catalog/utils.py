@@ -112,12 +112,9 @@ def get_program_types(user=None, program_type_name=None):  # pylint: disable=red
 
 def get_programs_data(user=None, program_id=None):
     """
-    Return the list of Programs after adding the ProgramType Logo Image
-    This is of programs is to be displayed on the courseware and home page
-    Filter out all programs with status not in the allowed_statuses list.
+    This will return the program details with its corresponding program_type if program_id
+    is given otherwise returns the list of all the programs with their program_types.
     """
-    #TODO correct the description
-
     filtered_programs_list = []
     allowed_statuses = ['active']
 
@@ -136,7 +133,13 @@ def get_programs_data(user=None, program_id=None):
                 program["type"] = program_types_lookup_dict[program["type"]]
                 filtered_programs_list.append(program)
 
-    return filtered_programs_list
+    response = filtered_programs_list
+
+    # if program_id is given then we will return the single program
+    if program_id and filtered_programs_list:
+        response = filtered_programs_list[0]
+
+    return response
 
 
 def munge_catalog_program(catalog_program):
