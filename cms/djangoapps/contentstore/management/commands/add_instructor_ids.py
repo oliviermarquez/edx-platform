@@ -54,7 +54,6 @@ class Command(BaseCommand):
             default=[]
         )
 
-
     @staticmethod
     def _populate_instructor_uuid(course_keys, username):
         """

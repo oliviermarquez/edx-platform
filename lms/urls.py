@@ -432,7 +432,7 @@ urlpatterns += (
         ),
         'courseware.views.views.program_detail',
         name='about_program',
-     ),
+    ),
 
     # rest api for grades
     url(

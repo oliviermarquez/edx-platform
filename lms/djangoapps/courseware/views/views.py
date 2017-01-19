@@ -40,7 +40,7 @@ from lms.djangoapps.instructor.enrollment import uses_shib
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from lms.djangoapps.ccx.custom_exception import CCXLocatorValidationException
 
-from openedx.core.djangoapps.catalog.utils import get_programs_data, get_programs
+from openedx.core.djangoapps.catalog.utils import get_programs_data
 import shoppingcart
 import survey.utils
 import survey.views
@@ -679,25 +679,13 @@ def program_detail(request, program_id):
 
     Assumes the program_id is in a valid format.
     """
-
-    # take care the filteration of only active programs
-
-
-    # // Fetch the program based on the program_id uuid
-    # // Based on the check if the program is active or unpublished, show the details page or return a 404.
-    #
-    # Build out the entire context required for the program_details page
-    #     // Program type logo by calling get_program_types passing the program_type_name
-    #     // List of all courses in the program by calling utils/get_course_run()
-    #     List of instructors is in the course's insturctors list. These lists can be extended to get the combined list of all instructors in the program.
-
     context = {}
     program = get_programs_data(request.user, program_id)
 
     if not program:
         raise Http404
     else:
-        context['program'] = program[0]
+        context['program'] = program
 
     return render_to_response('courseware/program_details.html', context)
 
