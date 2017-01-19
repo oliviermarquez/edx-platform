@@ -64,6 +64,7 @@ class Program(factory.Factory):
     title = FuzzyText(prefix='Program ')
     subtitle = FuzzyText(prefix='Subtitle ')
     type = 'FooBar'
+    status = 'active'
     marketing_slug = FuzzyText(prefix='slug_')
     authoring_organizations = [Organization()]
     courses = [Course() for __ in range(3)]
