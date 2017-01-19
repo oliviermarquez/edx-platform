@@ -289,7 +289,7 @@ def create_mode(request, course_id):
         'min_price': 0,
         'suggested_prices': u'',
         'currency': u'usd',
-        'sku': u'',
+        'sku': None,
     }
 
     # Try pulling querystring parameters out of the request

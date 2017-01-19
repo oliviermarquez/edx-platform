@@ -1207,23 +1207,23 @@ class CertificateInvalidationTest(BaseInstructorDashboardTest):
 @attr(shard=10)
 class EcommerceTest(BaseInstructorDashboardTest):
     """
-    Bok Choy tests for the "E-Commerce" tab. 
+    Bok Choy tests for the "E-Commerce" tab.
     """
     def setUp(self):
         super(EcommerceTest, self).setUp()
 
-    def setUpCourse(self, course_number):
+    def setup_course(self, course_number):
         """
         Sets up the course
         """
         self.course_info['number'] = course_number
-        self.course_fixture = CourseFixture(
+        course_fixture = CourseFixture(
             self.course_info["org"],
             self.course_info["number"],
             self.course_info["run"],
             self.course_info["display_name"]
         )
-        self.course_fixture.install()
+        course_fixture.install()
 
     def log_in_as_unique_user(self):
         """
@@ -1246,16 +1246,18 @@ class EcommerceTest(BaseInstructorDashboardTest):
         return instructor_dashboard_page.select_ecommerce_tab()
 
     def add_course_mode(self, sku_value=None):
-        # Add an honor mode to the course
+        """
+        Add an honor mode to the course
+        """
         ModeCreationPage(self.browser, self.course_id, min_price=10, sku=sku_value).visit()
 
     def test_enrollment_codes_section_visible_for_non_ecommerce_course(self):
         """
-        Test Enrollment Codes UI, under E-commerce Tab, should be visible in the Instructor Dashboard with non 
-        e-commerce course 
+        Test Enrollment Codes UI, under E-commerce Tab, should be visible in the Instructor Dashboard with non
+        e-commerce course
         """
         # Setup course
-        self.setUpCourse("34039497242734583224814321005482849780")
+        self.setup_course("34039497242734583224814321005482849780")
 
         # Add an honor mode to the course
         self.add_course_mode()
@@ -1265,11 +1267,11 @@ class EcommerceTest(BaseInstructorDashboardTest):
 
     def test_coupon_codes_section_visible_for_non_ecommerce_course(self):
         """
-        Test Coupon Codes UI, under E-commerce Tab, should be visible in the Instructor Dashboard with non 
-        e-commerce course 
+        Test Coupon Codes UI, under E-commerce Tab, should be visible in the Instructor Dashboard with non
+        e-commerce course
         """
         # Setup course
-        self.setUpCourse("34039497242734583224814321005482849781")
+        self.setup_course("34039497242734583224814321005482849781")
 
         # Add an honor mode to the course
         self.add_course_mode()
@@ -1280,10 +1282,10 @@ class EcommerceTest(BaseInstructorDashboardTest):
     def test_enrollment_codes_section_not_visible_for_ecommerce_course(self):
         """
         Test Enrollment Codes UI, under E-commerce Tab, should not be visible in the Instructor Dashboard with
-        e-commerce course 
+        e-commerce course
         """
         # Setup course
-        self.setUpCourse("34039497242734583224814321005482849782")
+        self.setup_course("34039497242734583224814321005482849782")
 
         # Add an honor mode to the course with sku value
         self.add_course_mode('test_sku')
@@ -1294,10 +1296,10 @@ class EcommerceTest(BaseInstructorDashboardTest):
     def test_coupon_codes_section_not_visible_for_ecommerce_course(self):
         """
         Test Coupon Codes UI, under E-commerce Tab, should not be visible in the Instructor Dashboard with
-        e-commerce course 
+        e-commerce course
         """
         # Setup course
-        self.setUpCourse("34039497242734583224814321005482849783")
+        self.setup_course("34039497242734583224814321005482849783")
 
         # Add an honor mode to the course with sku value
         self.add_course_mode('test_sku')

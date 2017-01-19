@@ -93,8 +93,8 @@ class InstructorDashboardPage(CoursePage):
         return email_section
 
     def select_ecommerce_tab(self):
-        """ 
-        Selects the E-commerce tab and returns an EcommercePage. 
+        """
+        Selects the E-commerce tab and returns an EcommercePage.
         """
         self.q(css='[data-section="e-commerce"]').first.click()
         ecommerce_section = EcommercePage(self.browser)
