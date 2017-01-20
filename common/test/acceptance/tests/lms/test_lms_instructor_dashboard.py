@@ -1249,7 +1249,8 @@ class EcommerceTest(BaseInstructorDashboardTest):
         """
         Add an honor mode to the course
         """
-        ModeCreationPage(self.browser, self.course_id, mode_slug=u'honor', min_price=10, sku=sku_value).visit()
+        ModeCreationPage(browser=self.browser, course_id=self.course_id, mode_slug=u'honor', min_price=10,
+                         sku=sku_value).visit()
 
     def test_enrollment_codes_section_visible_for_non_ecommerce_course(self):
         """
