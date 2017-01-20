@@ -31,6 +31,7 @@ class ModeCreationPage(PageObject):
             min_price (int): The minimum price a user must pay to enroll in the new course mode
             suggested_prices (str): Comma-separated prices to suggest to the user.
             currency (str): The currency in which to list prices.
+            sku (str): The product SKU value.
         """
         super(ModeCreationPage, self).__init__(browser)
 

@@ -1438,6 +1438,6 @@ class EcommercePage(PageObject):
 
     def get_sections_header_values(self):
         """
-        Returns a list of the headings' text under div.
+        Returns a list of the headings text under div.
         """
         return self.q(css="div.wrap h3").text
