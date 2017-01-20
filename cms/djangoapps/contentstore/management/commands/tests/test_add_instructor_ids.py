@@ -1,3 +1,6 @@
+"""
+Unit test for add_instructor_ids.
+"""
 
 import mock
 
@@ -55,8 +58,8 @@ class TestAddInstructorID(ModuleStoreTestCase):
 
         # Test uuids should be populated
         instructors = CourseDetails.fetch(CourseKey.from_string(self.course_key)).instructor_info
-        for instructor in instructors.get("instructors", []):
-            self.assertTrue("uuid" in instructor)
+        for instructor in instructors.get("instructors", []):   # pylint: disable=E1101
+            self.assertIn("uuid", instructor)
 
     def test_uuid_population_by_org(self):
         """
@@ -73,8 +76,8 @@ class TestAddInstructorID(ModuleStoreTestCase):
 
         # Test uuids should not be populated
         instructors = CourseDetails.fetch(CourseKey.from_string(self.course_key)).instructor_info
-        for instructor in instructors.get("instructors", []):
-            self.assertFalse("uuid" in instructor)
+        for instructor in instructors.get("instructors", []):   # pylint: disable=E1101
+            self.assertNotIn("uuid", instructor)
 
         # Mocked the raw_input and returns 'y'
         with mock.patch('__builtin__.raw_input', return_value='y') as _raw_input:
@@ -86,8 +89,8 @@ class TestAddInstructorID(ModuleStoreTestCase):
 
         # Test uuids should be populated
         instructors = CourseDetails.fetch(CourseKey.from_string(self.course_key)).instructor_info
-        for instructor in instructors.get("instructors", []):
-            self.assertTrue("uuid" in instructor)
+        for instructor in instructors.get("instructors", []):   # pylint: disable=E1101
+            self.assertIn("uuid", instructor)
 
     def test_insufficient_args(self):
         """
