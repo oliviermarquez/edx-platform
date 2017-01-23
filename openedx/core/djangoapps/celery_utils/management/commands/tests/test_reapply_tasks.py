@@ -6,6 +6,7 @@ from datetime import datetime
 import celery
 from django.test import TestCase
 from django.core.management import call_command
+import mock
 
 from openedx.core.djangolib.testing.utils import skip_unless_lms
 
@@ -84,3 +85,14 @@ class TestReapplyTaskCommand(TestCase):
         self.assertIsNone(models.FailedTask.objects.get(task_id=self.task_ids[0]).datetime_resolved)
         self.assertIsInstance(models.FailedTask.objects.get(task_id=self.task_ids[1]).datetime_resolved, datetime)
         self.assertIsNone(models.FailedTask.objects.get(task_id=self.task_ids[2]).datetime_resolved)
+
+    def test_duplicate_tasks(self):
+        models.FailedTask.objects.create(
+            task_name=self.task_name,
+            task_id=self.task_ids[1],
+            args=[],
+            kwargs={},
+            exc=u'AlsoThisOtherError()',
+        )
+        with mock.patch.object(cls.example_task, 'apply_async', wraps=cls.example_task.apply_async) as mock_apply:
+            pass # Verify that mock_apply was only called with self.task_ids[1] once.

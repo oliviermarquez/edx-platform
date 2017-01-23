@@ -34,5 +34,9 @@ class Command(BaseCommand):
             tasks = tasks.filter(task_name=options['task_name'])
         log.info(u'Reapplying {} tasks'.format(tasks.count()))
         log.debug(u'Reapplied tasks: {}'.format(list(tasks)))
+        seen_tasks = set()
         for task in tasks:
+            if task.task_id in seen_tasks:
+                continue
+            seen_tasks.append(task.task_id)
             task.reapply()
