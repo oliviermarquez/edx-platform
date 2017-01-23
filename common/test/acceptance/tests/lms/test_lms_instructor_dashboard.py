@@ -1258,7 +1258,8 @@ class EcommerceTest(BaseInstructorDashboardTest):
         e-commerce course
         """
         # Setup course
-        self.setup_course("34039497242734583224814321005482849780")
+        non_ecommerce_course_number = "34039497242734583224814321005482849780"
+        self.setup_course(non_ecommerce_course_number)
 
         # Add an honor mode to the course
         self.add_course_mode()
@@ -1272,7 +1273,8 @@ class EcommerceTest(BaseInstructorDashboardTest):
         e-commerce course
         """
         # Setup course
-        self.setup_course("34039497242734583224814321005482849781")
+        non_ecommerce_course_number = "34039497242734583224814321005482849781"
+        self.setup_course(non_ecommerce_course_number)
 
         # Add an honor mode to the course
         self.add_course_mode()
@@ -1286,7 +1288,8 @@ class EcommerceTest(BaseInstructorDashboardTest):
         e-commerce course
         """
         # Setup course
-        self.setup_course("34039497242734583224814321005482849782")
+        ecommerce_course_number = "34039497242734583224814321005482849782"
+        self.setup_course(ecommerce_course_number)
 
         # Add an honor mode to the course with sku value
         self.add_course_mode('test_sku')
@@ -1300,7 +1303,8 @@ class EcommerceTest(BaseInstructorDashboardTest):
         e-commerce course
         """
         # Setup course
-        self.setup_course("34039497242734583224814321005482849783")
+        ecommerce_course_number = "34039497242734583224814321005482849783"
+        self.setup_course(ecommerce_course_number)
 
         # Add an honor mode to the course with sku value
         self.add_course_mode('test_sku')

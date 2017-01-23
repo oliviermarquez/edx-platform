@@ -286,7 +286,7 @@ def _section_e_commerce(course, access, paid_mode, coupons_enabled, reports_enab
         'reports_enabled': reports_enabled,
         'course_price': course_price,
         'total_amount': total_amount,
-        'is_e_commerce_course': is_e_commerce_course(course_key)
+        'is_ecommerce_course': is_ecommerce_course(course_key)
     }
     return section_data
 
@@ -693,9 +693,10 @@ def _section_metrics(course, access):
     return section_data
 
 
-def is_e_commerce_course(course_key):
+def is_ecommerce_course(course_key):
     """
     Checks if the given course is an e-commerce course or not, by checking its SKU value from
     CourseMode records for the course
     """
-    return len([mode.sku for mode in CourseMode.modes_for_course(course_key) if mode.sku]) > 0
+    sku_count = len([mode.sku for mode in CourseMode.modes_for_course(course_key) if mode.sku])
+    return sku_count > 0
