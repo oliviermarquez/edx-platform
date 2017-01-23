@@ -228,12 +228,18 @@ class RecalculateSubsectionGradeTest(ModuleStoreTestCase):
         self._assert_retry_called(mock_retry)
 
     @patch('lms.djangoapps.grades.tasks.recalculate_subsection_grade_v2.retry')
-    def test_retry_subsection_grade_on_update_not_complete(self, mock_retry):
+    @patch('lms.djangoapps.grades.tasks.log')
+    def test_retry_subsection_grade_on_update_not_complete(self, mock_log, mock_retry):
         self.set_up_course()
+        past_timestamp = datetime.utcnow().replace(tzinfo=pytz.UTC) - timedelta(days=1)
         self._apply_recalculate_subsection_grade(
-            mock_score=MagicMock(modified=datetime.utcnow().replace(tzinfo=pytz.UTC) - timedelta(days=1))
+            mock_score=MagicMock(modified=past_timestamp)
         )
         self._assert_retry_called(mock_retry)
+        self.assertIn(
+            u"Persistent Grades: tasks._has_database_updated_with_new_score is False.",
+            mock_log.info.call_args_list[0][0][0]
+        )
 
     @patch('lms.djangoapps.grades.tasks.recalculate_subsection_grade_v2.retry')
     def test_retry_subsection_grade_on_update_not_complete_sub(self, mock_retry):
